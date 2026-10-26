@@ -1,0 +1,13 @@
+--- OctopusEAX/src/playback/clip_util.hpp	2026-10-25 18:52:10.307789681 +0400
++++ OctopusEAX-hardened/src/playback/clip_util.hpp	2026-10-25 18:54:26.177873296 +0400
+@@ -38,8 +38,9 @@
+ }
+ 
+ inline std::wstring toolsDir() {
++    // Per-user folder instead of the shared ProgramData folder: other local users cannot plant a fake yt-dlp.exe here.
+     wchar_t pd[MAX_PATH];
+-    DWORD n = GetEnvironmentVariableW(L"ProgramData", pd, MAX_PATH);
++    DWORD n = GetEnvironmentVariableW(L"LOCALAPPDATA", pd, MAX_PATH);
+     std::wstring base = (n && n < MAX_PATH) ? pd : L"C:\\ProgramData";
+     return base + L"\\OctopusEAX\\tools";
+ }
